@@ -1,5 +1,7 @@
 package com.laconcierge.ocupacao.util;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.auth0.jwt.JWT;
@@ -34,9 +36,9 @@ public class JWTUtil {
         return request.getHeader(HEADER_STRING).replace(TOKEN_PREFIX,"");
     }
     
-    public static String getSubjectFromToken(String token) {
+    public static UUID getSubjectFromToken(String token) {
         DecodedJWT decodedJWT = JWT.decode(token);
-        return decodedJWT.getSubject();
+        return UUID.fromString(decodedJWT.getSubject());
     }
     
 }

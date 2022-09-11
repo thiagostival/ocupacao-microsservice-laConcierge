@@ -4,18 +4,22 @@ services:
   app-java:
     build: .
     container_name: la_concierge_ocupacao
+
+    env_file: ./.env
+
     ports:
-      - 8080:8080
-    
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://172.25.0.2:5432/la_concierge_auth
-      - SPRING_DATASOURCE_USERNAME=laconcierge
-      - SPRING_DATASOURCE_PASSWORD=laconcierge
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
-      - jwt_secret=4ec1353ccbf2721e678d0dd099d4562e
-    
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://$PGDB_URL:$PGDB_LOCAL_PORT/$PGDB_DATABASE
+      - SPRING_DATASOURCE_USERNAME=$PGDB_USER
+      - SPRING_DATASOURCE_PASSWORD=$PGDB_PASSWORD
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=$SPRING_JPA_HIBERNATE_DDL_AUTO
+      - jwt_secret=$JWT_SECRET
+
     networks:
-      -   network-example
+      - network-example
+
 networks:
   network-example:
     external: true

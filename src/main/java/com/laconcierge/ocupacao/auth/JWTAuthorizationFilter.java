@@ -7,6 +7,7 @@ import static com.laconcierge.ocupacao.util.JWTUtil.isTokenValid;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -43,13 +44,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String subject = getSubjectFromToken(token);
+        UUID subject = getSubjectFromToken(token);
         if (subject == null) {
             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
-        Optional<User> user = userService.findByEmail(subject);
+        Optional<User> user = userService.findById(subject);
 
         if (user.isEmpty()) {
             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
