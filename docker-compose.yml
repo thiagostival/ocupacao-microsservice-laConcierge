@@ -4,12 +4,9 @@ services:
   app-java:
     build: .
     container_name: la_concierge_ocupacao
-
     env_file: ./.env
-
     ports:
       - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
-
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://$PGDB_URL:$PGDB_LOCAL_PORT/$PGDB_DATABASE
       - SPRING_DATASOURCE_USERNAME=$PGDB_USER
@@ -18,8 +15,8 @@ services:
       - jwt_secret=$JWT_SECRET
 
     networks:
-      - network-example
+      - network-laconcierge
 
 networks:
-  network-example:
+  network-laconcierge:
     external: true
